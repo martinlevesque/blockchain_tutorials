@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My site</title>
+    <script src="node_modules/web3.js-browser/build/web3.js">
+    </script>
+</head>
+
+<body>
+    <script>
+        let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+
+        const abiContract = [
+            {
+                "inputs": [],
+                "name": "myUint",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_myUint",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "setUint",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
+        const myContract = new web3.eth.Contract(abiContract, "0x69F755D836d37189f4734E94045A63c97EAdf866");
+
+        myContract.methods.setUint(57).send({from: "0x87BC06B87053D48cC827Ec291B52914094063BEb"});
+        myContract.methods.myUint().call().then(result => console.log(result.toString()));
+    </script>
+</body>
+</html>
